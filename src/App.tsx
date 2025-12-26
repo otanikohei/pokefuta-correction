@@ -101,6 +101,8 @@ function App() {
                 src={headerImage} 
                 alt="ポケふタコレクション" 
                 className="top-image"
+                loading="eager"
+                decoding="async"
                 onLoad={() => console.log('ヘッダー画像読み込み成功:', headerImage)}
                 onError={() => console.error('ヘッダー画像読み込み失敗:', headerImage)}
               />

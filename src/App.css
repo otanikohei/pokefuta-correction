@@ -548,6 +548,191 @@
   }
 }
 
+/* iPhone Safari 特有の最適化 */
+@supports (-webkit-touch-callout: none) {
+  /* iPhone Safari でのスクロール改善 */
+  body {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* タッチ操作の改善 */
+  .upload-button,
+  .cancel-button,
+  .reset-view-button,
+  .location-picker-button,
+  .delete-button,
+  .confirm-button,
+  .close-button {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: manipulation;
+  }
+  
+  /* ファイル入力の改善 */
+  .file-input {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  
+  /* マップコンテナのタッチ操作改善 */
+  .map-wrapper {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  
+  /* iPhone の Safe Area 対応 */
+  .app {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+  
+  /* ヘッダーの Safe Area 対応 */
+  .app-header {
+    padding-top: calc(1rem + env(safe-area-inset-top));
+  }
+}
+
+/* タッチデバイス向けの改善 */
+@media (hover: none) and (pointer: coarse) {
+  /* ボタンのサイズを大きくしてタッチしやすく */
+  .upload-button,
+  .cancel-button,
+  .reset-view-button,
+  .location-picker-button,
+  .delete-button,
+  .confirm-button {
+    min-height: 44px; /* Apple推奨の最小タッチターゲットサイズ */
+    padding: 0.75rem 1.5rem;
+  }
+  
+  /* マーカーのタッチ領域を拡大 */
+  .leaflet-marker-icon {
+    cursor: pointer !important;
+  }
+  
+  /* ポップアップの閉じるボタンを大きく */
+  .close-button {
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 1.2rem;
+  }
+  
+  /* ファイル選択ボタンの改善 */
+  .file-input {
+    min-height: 44px;
+    font-size: 16px; /* iOS でのズーム防止 */
+  }
+  
+  /* タッチフィードバックの改善 */
+  .upload-button:active,
+  .cancel-button:active,
+  .reset-view-button:active,
+  .location-picker-button:active,
+  .delete-button:active,
+  .confirm-button:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+  
+  /* マップコントロールの改善 */
+  .leaflet-control-zoom a {
+    width: 44px !important;
+    height: 44px !important;
+    line-height: 44px !important;
+    font-size: 18px !important;
+  }
+  
+  /* マップ上のポップアップ改善 */
+  .leaflet-popup-content-wrapper {
+    border-radius: 8px;
+  }
+  
+  .leaflet-popup-close-button {
+    width: 44px !important;
+    height: 44px !important;
+    font-size: 18px !important;
+  }
+}
+
+/* 横向き表示の最適化 */
+@media (max-width: 768px) and (orientation: landscape) {
+  .app-header {
+    padding: 0.5rem 1rem;
+  }
+  
+  .header-content {
+    flex-direction: row;
+    gap: 1rem;
+  }
+  
+  .top-image {
+    max-width: 60px;
+    max-height: 60px;
+  }
+  
+  .header-text h1 {
+    font-size: 1.1rem;
+  }
+  
+  .header-text p {
+    font-size: 0.8rem;
+  }
+  
+  .map-section {
+    min-height: 300px;
+  }
+}
+
+/* 小さな画面での最適化 */
+@media (max-width: 480px) {
+  .app-main {
+    padding: 0.25rem;
+    gap: 0.25rem;
+  }
+  
+  .upload-section,
+  .map-section {
+    padding: 0.5rem;
+  }
+  
+  .header-text h1 {
+    font-size: 1rem;
+  }
+  
+  .header-text p {
+    font-size: 0.75rem;
+  }
+  
+  .top-image {
+    max-width: 80px;
+    max-height: 80px;
+  }
+  
+  /* ポップアップの最適化 */
+  .photo-popup {
+    max-width: 98vw;
+    max-height: 98vh;
+    margin: 1vw;
+  }
+  
+  .popup-image {
+    max-height: 250px;
+  }
+  
+  /* 位置選択モーダルの最適化 */
+  .location-picker-modal {
+    width: 98vw;
+    max-height: 98vh;
+    margin: 1vw;
+  }
+}
+
 /* 新しいマーカーのハイライト効果 */
 .new-marker-highlight {
   animation: marker-highlight 2s ease-in-out infinite;

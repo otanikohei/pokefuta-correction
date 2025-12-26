@@ -30,6 +30,39 @@ const MapContainer: React.FC<MapContainerProps> = ({ focusLocation, newPhotoId, 
   const [mapCenter, setMapCenter] = useState<[number, number]>([35.6762, 139.6503]);
   const [mapZoom, setMapZoom] = useState(6);
   const [highlightedPhotoId, setHighlightedPhotoId] = useState<string | null>(null);
+  const [mapHeight, setMapHeight] = useState('500px');
+
+  // モバイルデバイスでのマップ高さ調整
+  useEffect(() => {
+    const updateMapHeight = () => {
+      const isMobile = window.innerWidth <= 768;
+      const isLandscape = window.innerWidth > window.innerHeight;
+      
+      if (isMobile) {
+        if (isLandscape) {
+          setMapHeight('300px');
+        } else {
+          // ビューポートの高さから他の要素を引いた高さを計算
+          const availableHeight = window.innerHeight - 300; // ヘッダーとアップロード部分を除く
+          const minHeight = 350;
+          const maxHeight = 600;
+          const calculatedHeight = Math.max(minHeight, Math.min(maxHeight, availableHeight));
+          setMapHeight(`${calculatedHeight}px`);
+        }
+      } else {
+        setMapHeight('500px');
+      }
+    };
+
+    updateMapHeight();
+    window.addEventListener('resize', updateMapHeight);
+    window.addEventListener('orientationchange', updateMapHeight);
+
+    return () => {
+      window.removeEventListener('resize', updateMapHeight);
+      window.removeEventListener('orientationchange', updateMapHeight);
+    };
+  }, []);
 
   // 新しい写真IDが設定された時のハイライト処理
   useEffect(() => {
@@ -151,11 +184,16 @@ const MapContainer: React.FC<MapContainerProps> = ({ focusLocation, newPhotoId, 
         )}
       </div>
       
-      <div className="map-wrapper" style={{ height: '500px', width: '100%' }}>
+      <div className="map-wrapper" style={{ height: mapHeight, width: '100%' }}>
         <LeafletMap
           center={mapCenter}
           zoom={mapZoom}
           style={{ height: '100%', width: '100%' }}
+          touchZoom={true}
+          doubleClickZoom={true}
+          scrollWheelZoom={true}
+          dragging={true}
+          zoomControl={true}
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

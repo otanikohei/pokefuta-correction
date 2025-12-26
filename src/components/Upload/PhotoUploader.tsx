@@ -232,6 +232,7 @@ const PhotoUploader: React.FC<PhotoUploaderProps> = ({ onPhotoUploaded, onPrevie
           ref={fileInputRef}
           type="file"
           accept="image/*"
+          capture="environment"
           onChange={handleFileSelect}
           disabled={uploading || processing}
           className="file-input"
@@ -276,6 +277,8 @@ const PhotoUploader: React.FC<PhotoUploaderProps> = ({ onPhotoUploaded, onPrevie
                 src={previewUrl} 
                 alt="プレビュー" 
                 style={{ maxWidth: '200px', maxHeight: '200px', objectFit: 'cover' }}
+                loading="lazy"
+                decoding="async"
               />
             </div>
           )}
