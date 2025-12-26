@@ -1,0 +1,871 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  background-color: #1976d2;
+  color: white;
+  padding: 1rem;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-image {
+  flex-shrink: 0;
+}
+
+.image-placeholder {
+  width: 120px;
+  height: 120px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.top-image {
+  max-width: 120px;
+  max-height: 120px;
+  width: auto;
+  height: auto;
+  border-radius: 60px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  object-fit: contain;
+}
+
+.header-text {
+  flex: 1;
+}
+
+.header-text h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+}
+
+.header-text p {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 0.9rem;
+}
+
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.upload-section {
+  background-color: #f5f5f5;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.map-section {
+  flex: 1;
+  background-color: #f0f0f0;
+  padding: 1rem;
+  border-radius: 8px;
+  min-height: 400px;
+}
+
+/* 写真アップローダー */
+.photo-uploader {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.photo-uploader h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.upload-area {
+  margin-bottom: 1rem;
+}
+
+.file-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 2px dashed #ccc;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.upload-prompt {
+  text-align: center;
+  padding: 1rem;
+  color: #666;
+}
+
+.selected-file {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.file-info {
+  margin-bottom: 1rem;
+}
+
+.preview {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.upload-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.upload-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.upload-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.cancel-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.upload-status {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* アップロード進捗 */
+.upload-progress {
+  margin: 1rem 0;
+}
+
+.progress-info {
+  margin-bottom: 0.5rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 20px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #4caf50;
+  transition: width 0.3s ease;
+}
+
+/* マップコンテナ */
+.map-container h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.map-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.map-header h2 {
+  margin: 0;
+}
+
+.map-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.reset-view-button {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: background-color 0.2s;
+}
+
+.reset-view-button:hover {
+  background-color: #1976d2;
+}
+
+.map-info {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background-color: white;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.focus-info {
+  color: #2196f3;
+  font-weight: bold;
+  margin: 0.25rem 0 0 0;
+}
+
+.map-wrapper {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* 写真ポップアップ */
+.photo-popup-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.photo-popup {
+  background-color: white;
+  border-radius: 8px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.popup-header h3 {
+  margin: 0;
+  color: #333;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-button:hover {
+  color: #333;
+}
+
+.popup-content {
+  padding: 1rem;
+}
+
+.loading-container {
+  text-align: center;
+  padding: 2rem;
+}
+
+.image-container {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.popup-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.photo-details {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+.detail-item {
+  margin-bottom: 0.5rem;
+  padding: 0.25rem 0;
+}
+
+.detail-item:last-child {
+  margin-bottom: 0;
+}
+
+/* 写真アクション */
+.photo-actions {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.delete-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.delete-button:hover:not(:disabled) {
+  background-color: #c82333;
+}
+
+.delete-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+/* 削除確認ダイアログ */
+.delete-confirm-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.delete-confirm-dialog {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  text-align: center;
+}
+
+.delete-confirm-dialog h4 {
+  margin: 0 0 0.5rem 0;
+  color: #dc3545;
+}
+
+.delete-confirm-dialog p {
+  margin: 0 0 1rem 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.delete-confirm-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.confirm-delete-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.confirm-delete-button:hover:not(:disabled) {
+  background-color: #c82333;
+}
+
+.confirm-delete-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.cancel-delete-button {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.cancel-delete-button:hover:not(:disabled) {
+  background-color: #545b62;
+}
+
+/* スプラッシュスクリーン */
+.splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+}
+
+.splash-screen.fade-out {
+  opacity: 0;
+}
+
+.splash-content {
+  text-align: center;
+  color: white;
+  animation: splash-fade-in 1s ease-out;
+}
+
+.splash-image {
+  margin-bottom: 2rem;
+}
+
+.splash-logo {
+  max-width: 200px;
+  max-height: 200px;
+  width: auto;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  animation: splash-bounce 2s ease-out;
+}
+
+.splash-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0 0 0.5rem 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  animation: splash-slide-up 1s ease-out 0.3s both;
+}
+
+.splash-subtitle {
+  font-size: 1.2rem;
+  margin: 0;
+  opacity: 0.9;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  animation: splash-slide-up 1s ease-out 0.6s both;
+}
+
+/* スプラッシュアニメーション */
+@keyframes splash-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes splash-bounce {
+  0% {
+    transform: scale(0.3) rotate(-10deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1) rotate(5deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes splash-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* モバイル対応 - スプラッシュスクリーン */
+@media (max-width: 768px) {
+  .splash-logo {
+    max-width: 150px;
+    max-height: 150px;
+  }
+  
+  .splash-title {
+    font-size: 2rem;
+  }
+  
+  .splash-subtitle {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+}
+
+/* 新しいマーカーのハイライト効果 */
+.new-marker-highlight {
+  animation: marker-highlight 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px #ff6b35);
+}
+
+@keyframes marker-highlight {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 10px #ff6b35);
+  }
+  50% {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 20px #ff6b35) drop-shadow(0 0 30px #ff6b35);
+  }
+}
+
+/* プレビューマーカーのスタイル */
+.preview-marker {
+  opacity: 0.7;
+  animation: preview-pulse 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px #2196f3);
+}
+
+@keyframes preview-pulse {
+  0%, 100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.05);
+  }
+}
+
+.processing-status {
+  text-align: center;
+  padding: 1rem;
+  background-color: #f0f8ff;
+  border-radius: 4px;
+  border: 1px solid #2196f3;
+  margin: 0.5rem 0;
+}
+
+.processing-info {
+  background-color: #e8f5e8;
+  padding: 0.75rem;
+  border-radius: 4px;
+  border: 1px solid #4caf50;
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+/* 位置選択ボタン */
+.location-picker-button {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.location-picker-button:hover {
+  background-color: #1976d2;
+}
+
+.location-picker-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.manual-location {
+  background-color: #e8f5e8;
+  padding: 0.75rem;
+  border-radius: 4px;
+  border: 1px solid #4caf50;
+  margin: 0.5rem 0;
+}
+
+/* 位置選択モーダル */
+.location-picker-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+  padding: 1rem;
+}
+
+.location-picker-modal {
+  background-color: white;
+  border-radius: 8px;
+  max-width: 90vw;
+  max-height: 90vh;
+  width: 600px;
+  overflow-y: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: #333;
+}
+
+.modal-content {
+  padding: 1rem;
+}
+
+.instruction {
+  margin-bottom: 1rem;
+  color: #666;
+  text-align: center;
+}
+
+.selected-location-info {
+  background-color: #f0f8ff;
+  padding: 0.75rem;
+  border-radius: 4px;
+  border: 1px solid #2196f3;
+  margin: 1rem 0;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  justify-content: flex-end;
+}
+
+.confirm-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.confirm-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.confirm-button:hover:not(:disabled) {
+  background-color: #45a049;
+}
+/* UIコンポーネント - LoadingSpinner */
+.loading-spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.loading-spinner-elegant {
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #e3f2fd, #2196f3, #e3f2fd);
+  animation: elegant-spin 1.5s linear infinite;
+  position: relative;
+}
+
+.loading-spinner-elegant::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  background: white;
+  border-radius: 50%;
+}
+
+.spinner-small .loading-spinner-elegant {
+  width: 24px;
+  height: 24px;
+}
+
+.spinner-medium .loading-spinner-elegant {
+  width: 32px;
+  height: 32px;
+}
+
+.spinner-large .loading-spinner-elegant {
+  width: 48px;
+  height: 48px;
+}
+
+.loading-text {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.spinner-small .loading-text {
+  font-size: 0.8rem;
+}
+
+.spinner-large .loading-text {
+  font-size: 1rem;
+}
+
+/* エレガントな回転アニメーション */
+@keyframes elegant-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* 古いスピナースタイル（後方互換性のため残す） */
+.loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-message {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 0.75rem;
+  border-radius: 4px;
+  border: 1px solid #ffcdd2;
+  margin: 0.5rem 0;
+}
+
+/* UI コンポーネント */
+@media (max-width: 768px) {
+  .app-main {
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
+  
+  .header-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+  
+  .top-image {
+    max-width: 100px;
+    max-height: 100px;
+  }
+  
+  .header-text h1 {
+    font-size: 1.2rem;
+  }
+  
+  .upload-section,
+  .map-section {
+    padding: 0.75rem;
+  }
+
+  .upload-actions {
+    flex-direction: column;
+  }
+
+  .photo-popup {
+    max-width: 95vw;
+    max-height: 95vh;
+  }
+
+  .popup-image {
+    max-height: 300px;
+  }
+}
+
+/* タブレット対応 */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .header-content {
+    gap: 1.5rem;
+  }
+  
+  .top-image {
+    max-width: 100px;
+    max-height: 100px;
+  }
+}
+/* モバイル対応 - 位置選択モーダル */
+@media (max-width: 768px) {
+  .location-picker-modal {
+    width: 95vw;
+    max-height: 95vh;
+  }
+  
+  .modal-actions {
+    flex-direction: column;
+  }
+  
+  .modal-actions button {
+    width: 100%;
+  }
+}
