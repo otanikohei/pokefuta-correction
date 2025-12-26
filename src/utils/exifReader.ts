@@ -20,12 +20,12 @@ export const readExifData = async (file: File): Promise<ExifData> => {
       ifd0: true,
       ifd1: true,
       interop: true,
-      makerNote: false, // メーカー固有データは不要
-      userComment: false, // ユーザーコメントは不要
-      sanitize: true, // データをサニタイズ
-      mergeOutput: true, // 出力をマージ
-      silentErrors: false, // エラーを表示
-    });
+      makerNote: false,
+      userComment: false,
+      sanitize: true,
+      mergeOutput: true,
+      silentErrors: false,
+    } as any); // 型定義の問題を回避
 
     console.log('exifrで取得したEXIFデータ:', exifData);
 

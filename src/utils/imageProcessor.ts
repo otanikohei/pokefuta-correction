@@ -161,6 +161,6 @@ export const isSupportedImageFormat = (file: File): boolean => {
     'image/heif'
   ];
   
-  return supportedTypes.includes(file.type.toLowerCase()) || 
-         file.name.toLowerCase().match(/\.(jpg|jpeg|png|webp|heic|heif)$/);
+  const matchResult = file.name.toLowerCase().match(/\.(jpg|jpeg|png|webp|heic|heif)$/);
+  return supportedTypes.includes(file.type.toLowerCase()) || Boolean(matchResult);
 };

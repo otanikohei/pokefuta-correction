@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapContainer as LeafletMap, TileLayer, useMap } from 'react-leaflet';
 import { usePhotos } from '../../hooks/usePhotos';
 import PhotoMarker from './PhotoMarker';

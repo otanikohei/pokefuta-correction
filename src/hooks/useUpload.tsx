@@ -3,7 +3,7 @@ import { uploadData } from 'aws-amplify/storage';
 import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../../amplify/data/resource';
 import type { PhotoUploadData } from '../types/photo';
-import { savePhotoLocally, type LocalPhotoData } from '../utils/localStorageUpload';
+import { savePhotoLocally } from '../utils/localStorageUpload';
 
 const client = generateClient<Schema>();
 
