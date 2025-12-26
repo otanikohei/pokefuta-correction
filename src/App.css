@@ -228,6 +228,29 @@
   background-color: #1976d2;
 }
 
+.current-location-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: background-color 0.2s;
+}
+
+.current-location-button:hover:not(:disabled) {
+  background-color: #45a049;
+}
+
+.current-location-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
 .map-info {
   margin-bottom: 1rem;
   padding: 0.5rem;
@@ -240,6 +263,26 @@
   color: #2196f3;
   font-weight: bold;
   margin: 0.25rem 0 0 0;
+}
+
+.gps-info {
+  color: #ff9800;
+  font-weight: bold;
+  margin: 0.25rem 0 0 0;
+}
+
+.gps-error {
+  color: #f44336;
+  font-weight: bold;
+  margin: 0.25rem 0 0 0;
+  font-size: 0.9rem;
+}
+
+.gps-success {
+  color: #4caf50;
+  font-weight: bold;
+  margin: 0.25rem 0 0 0;
+  font-size: 0.9rem;
 }
 
 .map-wrapper {
@@ -558,11 +601,8 @@
   /* タッチ操作の改善 */
   .upload-button,
   .cancel-button,
-  .reset-view-button,
-  .location-picker-button,
-  .delete-button,
-  .confirm-button,
-  .close-button {
+  .app-header {
+    padding-top: env(safe-area-inset-top);
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -604,6 +644,7 @@
   .upload-button,
   .cancel-button,
   .reset-view-button,
+  .current-location-button,
   .location-picker-button,
   .delete-button,
   .confirm-button {
@@ -633,6 +674,7 @@
   .upload-button:active,
   .cancel-button:active,
   .reset-view-button:active,
+  .current-location-button:active,
   .location-picker-button:active,
   .delete-button:active,
   .confirm-button:active {

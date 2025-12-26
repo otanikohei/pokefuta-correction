@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MapContainer as LeafletMap, TileLayer, useMap } from 'react-leaflet';
 import { usePhotos } from '../../hooks/usePhotos';
+import { useGeolocation } from '../../hooks/useGeolocation';
 import PhotoMarker from './PhotoMarker';
 import PhotoPopup from './PhotoPopup';
 import LoadingSpinner from '../UI/LoadingSpinner';
@@ -26,11 +27,52 @@ interface MapContainerProps {
 
 const MapContainer: React.FC<MapContainerProps> = ({ focusLocation, newPhotoId, previewLocation }) => {
   const { photos, loading, error, refetch } = usePhotos();
+  const { latitude, longitude, error: gpsError, loading: gpsLoading, refetch: refetchGPS } = useGeolocation();
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
-  const [mapCenter, setMapCenter] = useState<[number, number]>([35.6762, 139.6503]);
-  const [mapZoom, setMapZoom] = useState(6);
+  
+  // 日本の中心座標（東京周辺）をデフォルトとして使用
+  const japanCenter: [number, number] = [35.6762, 139.6503];
+  const defaultZoom = 6;
+  const gpsZoom = 12; // 10km程度の縮尺（5マイル相当）
+  
+  // GPS位置が取得できた場合はそれを使用、そうでなければ日本の中心を使用
+  const initialCenter: [number, number] = 
+    latitude !== null && longitude !== null 
+      ? [latitude, longitude] 
+      : japanCenter;
+  
+  const initialZoom = latitude !== null && longitude !== null ? gpsZoom : defaultZoom;
+  
+  const [mapCenter, setMapCenter] = useState<[number, number]>(initialCenter);
+  const [mapZoom, setMapZoom] = useState(initialZoom);
   const [highlightedPhotoId, setHighlightedPhotoId] = useState<string | null>(null);
   const [mapHeight, setMapHeight] = useState('500px');
+
+  // GPS位置情報が取得できた時にマップの中心を更新
+  useEffect(() => {
+    if (latitude !== null && longitude !== null && !focusLocation) {
+      console.log('GPS位置情報を取得しました:', { latitude, longitude });
+      const gpsCenter: [number, number] = [latitude, longitude];
+      
+      // 現在の位置と異なる場合のみ更新
+      const currentLat = mapCenter[0];
+      const currentLng = mapCenter[1];
+      const latDiff = Math.abs(currentLat - gpsCenter[0]);
+      const lngDiff = Math.abs(currentLng - gpsCenter[1]);
+      
+      // 微小な差は無視（無限ループ防止）
+      if (latDiff > 0.000001 || lngDiff > 0.000001) {
+        console.log('GPS位置でマップの中心を更新:', { 
+          from: mapCenter, 
+          to: gpsCenter, 
+          zoom: gpsZoom 
+        });
+        
+        setMapCenter(gpsCenter);
+        setMapZoom(gpsZoom);
+      }
+    }
+  }, [latitude, longitude, focusLocation]);
 
   // モバイルデバイスでのマップ高さ調整
   useEffect(() => {
@@ -81,8 +123,8 @@ const MapContainer: React.FC<MapContainerProps> = ({ focusLocation, newPhotoId, 
   }, [newPhotoId]);
 
   // 日本の中心座標（東京周辺）
-  const japanCenter: [number, number] = [35.6762, 139.6503];
-  const defaultZoom = 6;
+  // const japanCenter: [number, number] = [35.6762, 139.6503]; // 上で定義済み
+  // const defaultZoom = 6; // 上で定義済み
 
   // focusLocationが変更された時にマップの中心を更新
   useEffect(() => {
@@ -127,6 +169,18 @@ const MapContainer: React.FC<MapContainerProps> = ({ focusLocation, newPhotoId, 
     setMapZoom(defaultZoom);
   };
 
+  // 現在位置に戻すボタンのハンドラー
+  const handleGoToCurrentLocation = () => {
+    if (latitude !== null && longitude !== null) {
+      const currentLocation: [number, number] = [latitude, longitude];
+      setMapCenter(currentLocation);
+      setMapZoom(gpsZoom);
+    } else {
+      // GPS情報を再取得
+      refetchGPS();
+    }
+  };
+
   const handlePhotoDeleted = async () => {
     // 写真が削除された後、写真リストを更新
     console.log('写真が削除されました、リストを更新します');
@@ -166,6 +220,14 @@ const MapContainer: React.FC<MapContainerProps> = ({ focusLocation, newPhotoId, 
         <h2>ポケふたマップ</h2>
         <div className="map-controls">
           <button 
+            onClick={handleGoToCurrentLocation}
+            className="current-location-button"
+            title={latitude !== null && longitude !== null ? "現在位置に移動" : "位置情報を取得"}
+            disabled={gpsLoading}
+          >
+            {gpsLoading ? "📍⏳" : latitude !== null && longitude !== null ? "📍 現在位置" : "📍 位置取得"}
+          </button>
+          <button 
             onClick={handleResetView}
             className="reset-view-button"
             title="日本全体を表示"
@@ -177,9 +239,20 @@ const MapContainer: React.FC<MapContainerProps> = ({ focusLocation, newPhotoId, 
       
       <div className="map-info">
         <p>登録済み写真数: {photos.length}枚</p>
+        {gpsLoading && (
+          <p className="gps-info">📍 位置情報を取得中...</p>
+        )}
+        {gpsError && (
+          <p className="gps-error">⚠️ {gpsError}</p>
+        )}
+        {latitude !== null && longitude !== null && (
+          <p className="gps-success">
+            📍 現在位置: {latitude.toFixed(6)}, {longitude.toFixed(6)}
+          </p>
+        )}
         {focusLocation && (
           <p className="focus-info">
-            📍 位置: {focusLocation.lat.toFixed(6)}, {focusLocation.lng.toFixed(6)}
+            📍 選択位置: {focusLocation.lat.toFixed(6)}, {focusLocation.lng.toFixed(6)}
           </p>
         )}
       </div>
